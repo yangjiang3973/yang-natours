@@ -8,6 +8,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
+const cors = require("cors");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const tourRouter = require("./routes/tourRoutes");
@@ -27,6 +28,12 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // global middlewares
+// Implement CORS
+app.use(cors()); // add some headers to response
+
+app.options("*", cors());
+// example: app.options('/api/v1/tours/:id, cors())
+
 // set security http headers
 app.use(helmet());
 // dev logging
